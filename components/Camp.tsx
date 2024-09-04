@@ -1,4 +1,3 @@
-// components/Camp.tsx
 'use client';
 import { useRef } from 'react';
 import { PEOPLE_URL } from "@/constants";

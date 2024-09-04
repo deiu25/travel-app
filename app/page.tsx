@@ -1,4 +1,3 @@
-// app/page.tsx
 import Camp from "@/components/Camp";
 import Features from "@/components/Features";
 import GetApp from "@/components/GetApp";
