@@ -1,65 +1,69 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { FEATURES } from '@/constants';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { featuresAnimations } from '@/animations/gsapAnimations';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { featuresAnimations } from '@/animations/gsapAnimations';
 
 const Features = () => {
-  const sectionRef = useRef(null);
-  const phoneRef = useRef(null);
-  const titleRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLImageElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-    }
+    gsap.registerPlugin(ScrollTrigger);
     featuresAnimations({
       sectionRef,
       phoneRef,
       titleRef,
       featuresRef,
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="flex-col flexCenter overflow-hidden bg-feature-bg bg-center bg-no-repeat py-24"
+      className="flex flex-col items-center justify-center overflow-hidden bg-feature-bg bg-center bg-no-repeat py-24"
     >
-      <div className="max-container padding-container relative w-full flex justify-end">
-        <div className="flex flex-1 lg:min-h-[900px]">
+      <div className="max-container padding-container relative flex w-full justify-end">
+        <div className="flex-1 flex items-center lg:min-h-[900px]">
           <Image
             ref={phoneRef}
             src="/phone.png"
-            alt="phone"
+            alt="Illustration of a phone showing the app features"
             width={440}
             height={1000}
             className="feature-phone"
+            loading="lazy"
           />
         </div>
 
         <div className="z-20 flex w-full flex-col lg:w-[60%]">
-          <div className="relative" ref={titleRef}>
+          <div className="relative mb-10" ref={titleRef}>
             <Image
               src="/camp.svg"
-              alt="camp"
+              alt="Camp Icon"
               width={50}
               height={50}
               className="absolute left-[-5px] top-[-28px] w-10 lg:w-[50px]"
+              loading="lazy"
             />
-            <h2 className="bold-40 lg:bold-64">Our Features</h2>
+            <h2 className="text-4xl font-bold lg:text-6xl">Our Features</h2>
           </div>
-          <ul className="mt-10 grid gap-10 md:grid-cols-2 lg:mg-20 lg:gap-20">
+          <ul className="grid gap-10 md:grid-cols-2 lg:gap-20">
             {FEATURES.map((feature, index) => (
               <FeatureItem
                 key={feature.title}
                 title={feature.title}
                 icon={feature.icon}
                 description={feature.description}
-                ref={(el) => {
+                ref={el => {
                   featuresRef.current[index] = el;
                 }}
               />
@@ -77,20 +81,16 @@ type FeatureItemProps = {
   description: string;
 };
 
-const FeatureItem = React.forwardRef<HTMLLIElement, FeatureItemProps>(
-  ({ title, icon, description }, ref) => {
-    return (
-      <li ref={ref} className="flex w-full flex-1 flex-col items-start">
-        <div className="rounded-full p-4 lg:p-7 bg-green-50">
-          <Image src={icon} alt="map" width={28} height={28} />
-        </div>
-        <h2 className="bold-20 lg:bold-32 mt-5 capitalize">{title}</h2>
-        <p className="regular-16 mt-5 bg-white/80 text-gray-30 lg:mt-[30px] lg:bg-none">
-          {description}
-        </p>
-      </li>
-    );
-  }
+const FeatureItem = memo(
+  React.forwardRef<HTMLLIElement, FeatureItemProps>(({ title, icon, description }, ref) => (
+    <li ref={ref} className="flex flex-col items-start">
+      <div className="rounded-full bg-green-50 p-4 lg:p-7">
+        <Image src={icon} alt={`${title} icon`} width={28} height={28} loading="lazy" />
+      </div>
+      <h2 className="mt-5 text-xl font-bold capitalize lg:text-2xl">{title}</h2>
+      <p className="mt-5 text-gray-500 lg:mt-[30px]">{description}</p>
+    </li>
+  ))
 );
 
 FeatureItem.displayName = 'FeatureItem';

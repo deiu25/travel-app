@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import Image from 'next/image';
 import Button from './Button';
 import gsap from 'gsap';
@@ -7,21 +7,23 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { heroAnimations } from '@/animations/gsapAnimations';
 
 const Hero = () => {
-  const sectionRef = useRef(null);
-  const textRef = useRef(null);
-  const imageRef = useRef(null);
-  const buttonsRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-    }
+    gsap.registerPlugin(ScrollTrigger);
     heroAnimations({
       sectionRef,
       textRef,
       imageRef,
       buttonsRef,
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill()); // Clean up animations on unmount
+    };
   }, []);
 
   return (
@@ -31,21 +33,18 @@ const Hero = () => {
     >
       <div className="hero-map" />
 
-      <div
-        ref={textRef}
-        className="relative z-20 flex flex-1 flex-col xl:w-1/2"
-      >
+      <div ref={textRef} className="relative z-20 flex flex-1 flex-col xl:w-1/2">
         <Image
           src="/camp.svg"
-          alt="camp"
+          alt="Camping Icon"
           width={20}
           height={20}
           className="absolute left-[-5px] top-[-30px] w-10 lg:w-[50px]"
+          loading="lazy"
         />
-        <h1 className="bold-52 lg:bold-88">New Camping Area</h1>
-        <p className="regular-16 mt-6 text-gray-30 xl:max-w-[520px]">
-          Discover the beauty of nature with us! Explore amazing places around
-          the world, right from our app.
+        <h1 className="text-4xl font-bold lg:text-5xl xl:text-6xl">New Camping Area</h1>
+        <p className="mt-6 text-gray-500 xl:max-w-[520px]">
+          Discover the beauty of nature with us! Explore amazing places around the world, right from our app.
         </p>
 
         <div className="my-11 flex flex-wrap gap-5">
@@ -56,56 +55,44 @@ const Hero = () => {
                 <Image
                   src="/star.svg"
                   key={index}
-                  alt="star"
+                  alt="Star icon representing excellent reviews"
                   width={24}
                   height={24}
+                  loading="lazy"
                 />
               ))}
           </div>
 
-          <p className="bold-16 lg:bold-20 text-blue-70">
+          <p className="text-lg font-semibold text-blue-700">
             200k
-            <span className="regular-16 lg:regular-20 ml-1">
-              Excellent Reviews
-            </span>
+            <span className="ml-1 text-base font-normal">Excellent Reviews</span>
           </p>
         </div>
 
-        <div
-          ref={buttonsRef}
-          className="flex flex-col w-full gap-3 sm:flex-row"
-        >
+        <div ref={buttonsRef} className="flex w-full flex-col gap-3 sm:flex-row">
           <Button type="button" title="Download the App" variant="btn_green" />
-          <Button
-            type="button"
-            title="How We Work?"
-            icon="/play.svg"
-            variant="btn_white_text"
-          />
+          <Button type="button" title="How We Work?" icon="/play.svg" variant="btn_white_text" />
         </div>
       </div>
 
-      <div
-        ref={imageRef}
-        className="relative flex flex-1 items-start"
-      >
-        <div className="relative z-20 flex w-[268px] flex-col gap-8 rounded-3xl bg-green-90 px-7 py-8">
+      <div ref={imageRef} className="relative flex flex-1 items-start">
+        <div className="relative z-20 flex w-[268px] flex-col gap-8 rounded-3xl bg-green-900 px-7 py-8">
           <div className="flex flex-col">
-            <div className="flexBetween">
-              <p className="regular-16 text-gray-20">Location</p>
-              <Image src="/close.svg" alt="close" width={24} height={24} />
+            <div className="flex justify-between">
+              <p className="text-sm text-gray-400">Location</p>
+              <Image src="/close.svg" alt="Close icon" width={24} height={24} loading="lazy" />
             </div>
-            <p className="bold-20 text-white">New York City, USA</p>
+            <p className="mt-2 text-lg font-bold text-white">New York City, USA</p>
           </div>
 
-          <div className="flexBetween">
+          <div className="flex justify-between">
             <div className="flex flex-col">
-              <p className="regular-16 block text-gray-20">Distance</p>
-              <p className="bold-20 text-white">250 miles</p>
+              <p className="text-sm text-gray-400">Distance</p>
+              <p className="text-lg font-bold text-white">250 miles</p>
             </div>
             <div className="flex flex-col">
-              <p className="regular-16 block text-gray-20">Elevation</p>
-              <p className="bold-20 text-white">1,500 m</p>
+              <p className="text-sm text-gray-400">Elevation</p>
+              <p className="text-lg font-bold text-white">1,500 m</p>
             </div>
           </div>
         </div>
@@ -114,4 +101,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

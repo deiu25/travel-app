@@ -1,39 +1,43 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import Button from './Button';
 import Image from 'next/image';
 import gsap from 'gsap';
-import { getAppAnimations } from '@/animations/gsapAnimations';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { getAppAnimations } from '@/animations/gsapAnimations';
 
 const GetApp = () => {
-  const sectionRef = useRef(null);
-  const textRef = useRef(null);
-  const buttonsRef = useRef(null);
-  const imageRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-    }
+    gsap.registerPlugin(ScrollTrigger);
     getAppAnimations({ sectionRef, textRef, buttonsRef, imageRef });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill()); 
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="flexCenter w-full flex-col pb-[100px]"
+      className="flex flex-col items-center justify-center w-full pb-[100px]"
     >
-      <div className="get-app">
+      <div className="get-app flex w-full max-w-6xl items-center">
         <div
           ref={textRef}
-          className="z-20 flex w-full flex-1 flex-col items-start justify-center gap-12"
+          className="flex flex-1 flex-col items-start justify-center gap-6 lg:gap-12"
         >
-          <h2 className="bold-40 lg:bold-64 xl:max-w-[320px]">Get for free now!</h2>
-          <p className="regular-16 text-gray-10">Available on iOS and Android</p>
+          <h2 className="text-3xl font-bold lg:text-4xl xl:text-5xl xl:max-w-[320px]">
+            Get for free now!
+          </h2>
+          <p className="text-gray-10 lg:text-lg">Available on iOS and Android</p>
           <div
             ref={buttonsRef}
-            className="flex w-full flex-col gap-3 whitespace-nowrap xl:flex-row"
+            className="flex flex-col gap-3 w-full xl:flex-row"
           >
             <Button
               type="button"
@@ -41,6 +45,7 @@ const GetApp = () => {
               icon="/apple.svg"
               variant="btn_white"
               full
+              aria-label="Download from App Store"
             />
             <Button
               type="button"
@@ -48,6 +53,7 @@ const GetApp = () => {
               icon="/android.svg"
               variant="btn_dark_green_outline"
               full
+              aria-label="Download from Play Store"
             />
           </div>
         </div>
@@ -56,11 +62,17 @@ const GetApp = () => {
           ref={imageRef}
           className="flex flex-1 items-center justify-end"
         >
-          <Image src="/phones.png" alt="phones" width={550} height={870} />
+          <Image
+            src="/phones.png"
+            alt="Mobile phones displaying the app interface"
+            width={550}
+            height={870}
+            loading="lazy"
+          />
         </div>
       </div>
     </section>
   );
 };
 
-export default GetApp;
+export default memo(GetApp);
