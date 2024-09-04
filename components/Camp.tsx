@@ -1,7 +1,10 @@
 'use client';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { PEOPLE_URL } from "@/constants";
 import Image from "next/image";
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { campAnimations } from '@/animations/gsapAnimations';
 
 interface CampProps {
   backgroundImage: string;
@@ -11,8 +14,20 @@ interface CampProps {
 }
 
 const CampSite = ({ backgroundImage, title, subtitle, peopleJoined }: CampProps) => {
+  const campSiteRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+    campAnimations({ campSiteRef }); 
+  }, []);
+
   return (
-    <div className={`h-full w-full min-w-[1100px] ${backgroundImage} bg-cover bg-no-repeat lg:rounded-r-5xl 2xl:rounded-5xl`}>
+    <div
+      ref={campSiteRef}
+      className={`h-full w-full min-w-full lg:min-w-[1100px] ${backgroundImage} bg-cover bg-no-repeat lg:rounded-r-5xl 2xl:rounded-5xl`}
+    >
       <div className="flex h-full flex-col items-start justify-between p-6 lg:px-20 lg:py-10">
         <div className="flexCenter gap-4">
           <div className="rounded-full bg-green-50 p-4">
@@ -51,23 +66,31 @@ const CampSite = ({ backgroundImage, title, subtitle, peopleJoined }: CampProps)
 
 const Camp = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    campAnimations({ sectionRef }); 
+  }, []);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.getBoundingClientRect().width * 0.8; 
+      const scrollAmount = scrollRef.current.getBoundingClientRect().width * 0.8;
       scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.getBoundingClientRect().width * 0.8; 
+      const scrollAmount = scrollRef.current.getBoundingClientRect().width * 0.8;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
   return (
-    <section className="2xl:max-container relative flex flex-col py-10 lg:mb-10 lg:py-20 xl:mb-20">
+    <section
+      ref={sectionRef}
+      className="2xl:max-container relative flex flex-col py-10 lg:mb-10 lg:py-20 xl:mb-20"
+    >
       <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
         <button onClick={scrollLeft} className="bg-white p-2 rounded-full shadow-lg">
           <Image src="/left-arrow.svg" alt="Scroll Left" width={24} height={24} />
