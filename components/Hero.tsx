@@ -22,7 +22,7 @@ const Hero = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill()); // Clean up animations on unmount
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill()); 
     };
   }, []);
 
@@ -42,9 +42,9 @@ const Hero = () => {
           className="absolute left-[-5px] top-[-30px] w-10 lg:w-[50px]"
           loading="lazy"
         />
-        <h1 className="text-4xl font-bold lg:text-5xl xl:text-6xl">New Camping Area</h1>
+        <h1 className="text-4xl font-bold lg:text-5xl xl:text-6xl">Piatra Craiului Camping Area</h1>
         <p className="mt-6 text-gray-500 xl:max-w-[520px]">
-          Discover the beauty of nature with us! Explore amazing places around the world, right from our app.
+        Discover the breathtaking landscapes of Romania with us! Explore stunning mountain areas like never before with our app.
         </p>
 
         <div className="my-11 flex flex-wrap gap-5">
@@ -82,17 +82,17 @@ const Hero = () => {
               <p className="text-sm text-gray-400">Location</p>
               <Image src="/close.svg" alt="Close icon" width={24} height={24} loading="lazy" />
             </div>
-            <p className="mt-2 text-lg font-bold text-white">New York City, USA</p>
+            <p className="mt-2 text-lg font-bold text-white">Zărnești, Romania</p>
           </div>
 
           <div className="flex justify-between">
             <div className="flex flex-col">
               <p className="text-sm text-gray-400">Distance</p>
-              <p className="text-lg font-bold text-white">250 miles</p>
+              <p className="text-lg font-bold text-white">35 km</p>
             </div>
             <div className="flex flex-col">
               <p className="text-sm text-gray-400">Elevation</p>
-              <p className="text-lg font-bold text-white">1,500 m</p>
+              <p className="text-lg font-bold text-white">1,600 m</p>
             </div>
           </div>
         </div>

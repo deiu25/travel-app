@@ -53,7 +53,7 @@ const Guide = () => {
       <div className="flexCenter max-container relative w-full">
         <Image
           ref={boatRef}
-          src="/boat.png"
+          src="/boat.webp"
           alt="Illustration of a boat in nature"
           width={1440}
           height={580}
@@ -79,12 +79,12 @@ const Guide = () => {
                 <p className="text-sm text-gray-400">Destination</p>
                 <p className="font-semibold text-green-50">2 h</p>
               </div>
-              <p className="mt-2 text-lg font-bold">Cabana Caraiman</p>
+              <p className="mt-2 text-lg font-bold">Cabana Bâlea Lac</p>
             </div>
 
             <div className="flex flex-col mt-4">
               <p className="text-sm text-gray-400">Start track</p>
-              <h4 className="mt-2 text-lg font-bold">Piatra Arsa</h4>
+              <h4 className="mt-2 text-lg font-bold">Transfăgărășan Road</h4>
             </div>
           </div>
         </div>

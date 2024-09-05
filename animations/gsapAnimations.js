@@ -1,7 +1,7 @@
 // gsapAnimations.js
 import gsap from 'gsap';
 
-// Funcție pentru configurarea ScrollTrigger pentru animații reutilizabile
+// Function to configure ScrollTrigger for reusable animations
 const setupScrollTrigger = (trigger, start = 'top 80%', end = 'top 50%', scrub = false) => ({
   trigger,
   start,
@@ -10,7 +10,7 @@ const setupScrollTrigger = (trigger, start = 'top 80%', end = 'top 50%', scrub =
   toggleActions: 'play none none reverse',
 });
 
-// Funcție generică pentru animații
+// Generic function for animations
 const animateElement = (element, from, to, trigger, scrub = false) => {
   gsap.fromTo(
     element,
@@ -19,7 +19,7 @@ const animateElement = (element, from, to, trigger, scrub = false) => {
   );
 };
 
-// Funcție de animație pentru componenta Guide
+// Guide component animation
 export const guideAnimations = (refs) => {
   const { sectionRef, titleRef, textRef, boatRef, infoBoxRef } = refs;
 
@@ -37,7 +37,7 @@ export const guideAnimations = (refs) => {
   animateElement(infoBoxRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1 }, boatRef.current);
 };
 
-// Funcție de animație pentru componenta GetApp
+// GetApp component animation
 export const getAppAnimations = (refs) => {
   const { sectionRef, textRef, buttonsRef, imageRef } = refs;
 
@@ -53,7 +53,7 @@ export const getAppAnimations = (refs) => {
   tl.fromTo(imageRef.current, { x: 100, opacity: 0 }, { x: 0, opacity: 1 }, "<0.5");
 };
 
-// Funcție de animație pentru componenta Features
+// Features component animation
 export const featuresAnimations = (refs) => {
   const { sectionRef, phoneRef, titleRef, featuresRef } = refs;
 
@@ -64,7 +64,7 @@ export const featuresAnimations = (refs) => {
   animateElement(featuresRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 2, stagger: 0.2 }, sectionRef.current);
 };
 
-// Funcție de animație pentru componenta Camp
+// Camp component animation
 export const campAnimations = (refs) => {
   const { sectionRef, campSiteRef } = refs;
 
@@ -77,7 +77,7 @@ export const campAnimations = (refs) => {
   }
 };
 
-// Funcție de animație pentru componenta Hero
+// Hero component animation
 export const heroAnimations = (refs) => {
   const { sectionRef, textRef, imageRef, buttonsRef } = refs;
 

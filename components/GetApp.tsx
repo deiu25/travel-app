@@ -32,9 +32,9 @@ const GetApp = () => {
           className="flex flex-1 flex-col items-start justify-center gap-6 lg:gap-12"
         >
           <h2 className="text-3xl font-bold lg:text-4xl xl:text-5xl xl:max-w-[320px]">
-            Get for free now!
+          Download for Free Today!
           </h2>
-          <p className="text-gray-10 lg:text-lg">Available on iOS and Android</p>
+          <p className="text-gray-10 lg:text-lg">Available on iOS and Android for seamless navigation through Romania’s majestic mountain trails</p>
           <div
             ref={buttonsRef}
             className="flex flex-col gap-3 w-full xl:flex-row"
@@ -63,7 +63,7 @@ const GetApp = () => {
           className="flex flex-1 items-center justify-end"
         >
           <Image
-            src="/phones.png"
+            src="/phones.webp"
             alt="Mobile phones displaying the app interface"
             width={550}
             height={870}

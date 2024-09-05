@@ -35,7 +35,7 @@ const Features = () => {
         <div className="flex-1 flex items-center lg:min-h-[900px]">
           <Image
             ref={phoneRef}
-            src="/phone.png"
+            src="/phone.webp"
             alt="Illustration of a phone showing the app features"
             width={440}
             height={1000}

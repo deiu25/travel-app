@@ -21,7 +21,7 @@ const CampSite = memo(({ backgroundImage, title, subtitle, peopleJoined }: CampP
     campAnimations({ campSiteRef });
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill()); 
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -111,15 +111,33 @@ const Camp = () => {
         ref={scrollRef}
       >
         <CampSite
-          backgroundImage="bg-bg-img-1"
-          title="Putuk Truno Camp"
-          subtitle="Prigen, Pasuruan"
-          peopleJoined="50+ Joined"
+          backgroundImage="bg-bg-img-4"
+          title="Retezat Adventure Camp"
+          subtitle="Râușor, Hunedoara"
+          peopleJoined="60+ Joined"
         />
         <CampSite
           backgroundImage="bg-bg-img-2"
-          title="Mountain View Camp"
-          subtitle="Somewhere in the Wilderness"
+          title="Bucegi Mountain Retreat"
+          subtitle="Sinaia, Prahova"
+          peopleJoined="30+ Joined"
+        />
+        <CampSite
+          backgroundImage="bg-bg-img-3"
+          title="Piatra Craiului Wilderness"
+          subtitle="Zărnești, Brașov"
+          peopleJoined="45+ Joined"
+        />
+        <CampSite
+          backgroundImage="bg-bg-img-1"
+          title="Făgăraș Ridge Camp"
+          subtitle="Victoria, Brașov"
+          peopleJoined="75+ Joined"
+        />
+        <CampSite
+          backgroundImage="bg-bg-img-5"
+          title="Ceahlău Mountain View"
+          subtitle="Durău, Neamț"
           peopleJoined="50+ Joined"
         />
       </div>
